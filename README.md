@@ -4,5 +4,5 @@ Uses Tweepy, Pandas.
 
 
 #Installation
-pip install tweepy
-pip install pandas
+###pip install tweepy
+###pip install pandas
