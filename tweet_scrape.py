@@ -46,3 +46,21 @@ def toDataFrame(tweets):
             tweets_place.append('null')
     DataSet['TweetPlace'] = [i for i in tweets_place]
     return DataSet
+
+OAUTH_KEYS = {'consumer_key':ckey, 'consumer_secret':csecret,'access_token_key':atoken, 'access_token_secret':asecret}
+auth = tweepy.OAuthHandler(OAUTH_KEYS['consumer_key'], OAUTH_KEYS['consumer_secret'])
+ 
+api = tweepy.API(auth, wait_on_rate_limit=True,wait_on_rate_limit_notify=True)
+if (not api):
+    print ("Can't Authenticate")
+    sys.exit(-1)
+else:
+    print " Scraping data now" # Enter lat and long and radius in Kms
+    cursor = tweepy.Cursor(api.search, q='hello',geocode="-22.9122,-43.2302,1km",since= '2016-03-05',until='2016-03-08',lang='en')
+    results=[]
+    for item in cursor.items(1000): # Scrape 1000 tweets
+            results.append(item)
+        
+    
+    DataSet = toDataFrame(results)
+    DataSet.to_csv('C:\\Users\\Vibhor Sehgal\\Desktop\\data.csv',index=False)
